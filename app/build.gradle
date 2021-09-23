@@ -1,0 +1,65 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+    useLibrary  'org.apache.http.legacy'
+
+
+
+    defaultConfig {
+        applicationId "com.example.testimageuploadhttp"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute module('org.hamcrest:hamcrest-core:1.1') with module('junit:junit:4.10')
+    }
+}
+
+def butterKnifeVersion = "8.4.0"
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.jakewharton:butterknife:${butterKnifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.annotation:annotation:1.0.0'
+
+    testImplementation 'junit:junit:4.+'
+    //testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:4.10'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //noinspection DuplicatePlatformClasses,DuplicatePlatformClasses
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+
+    //Volley Library - You need to add this line
+    implementation 'com.mcxiaoke.volley:library-aar:1.0.0'
+
+    //Add this line
+    implementation 'net.gotev:uploadservice:3.4'
+    }
