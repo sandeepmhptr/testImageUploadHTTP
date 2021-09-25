@@ -3,8 +3,10 @@ package com.example.testimageuploadhttp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -25,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,6 +44,8 @@ public class DownloadActivity extends AppCompatActivity {
         public static final String TAG_ID = "id";
         //GridView Object
         private GridView gridView;
+        private Button buttonList;
+        Button btnNormalList;
 
         //ArrayList for Storing image urls and titles
         private ArrayList<String> subJson;
@@ -49,7 +54,7 @@ public class DownloadActivity extends AppCompatActivity {
         private ArrayList<String> names;
         private ArrayList<String> id;
 
-    Button btnHit;
+
     EditText txtJson;
     ProgressDialog pd;
 
@@ -64,6 +69,8 @@ public class DownloadActivity extends AppCompatActivity {
             setContentView(R.layout.activity_download);    //Web api url*/
 
             gridView = (GridView) findViewById(R.id.gridView);
+            buttonList = (Button) findViewById(R.id.buttonList);
+            btnNormalList = (Button) findViewById(R.id.buttonList2);
 
             images = new ArrayList<>();
             names = new ArrayList<>();
@@ -73,38 +80,40 @@ public class DownloadActivity extends AppCompatActivity {
             //Calling the getData method
             //getData();
             new JsonTask().execute(DATA_URL);
+
+            buttonList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    /*Intent inte = new Intent(DownloadActivity.this,
+                            ShowListActivity.class);
+                    startActivity(inte);
+                    //invoke the SecondActivity.
+                    finish();*/
+                    //ArrayList<Object> object = new ArrayList<Object>();
+                    Intent intent = new Intent(DownloadActivity.this,
+                            ShowListActivity.class);
+                    Bundle args = new Bundle();
+                    args.putSerializable("IMAGELIST",(Serializable)images);
+                    intent.putExtra("BUNDLE",args);
+                    Bundle args2 = new Bundle();
+                    args.putSerializable("NAMELIST",(Serializable)names);
+                    intent.putExtra("BUNDLE2",args2);
+                    startActivity(intent);
+                    finish();
+
+                }
+            });
+            btnNormalList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent inte = new Intent(DownloadActivity.this,
+                            ShowNormalListActivity.class);
+                    startActivity(inte);
+                    //invoke the SecondActivity.
+                    finish();
+                }
+            });
         }
-
-        /*private void getData(){
-            //Showing a progress dialog while our app fetches the data from url
-             ProgressDialog loading = ProgressDialog.show(this, "Please wait...","Fetching data...",false,false);
-
-            //Creating a json array request to get the json from our api
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(DATA_URL,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            //Dismissing the progress dialog on response
-                            loading.dismiss();
-
-                            //Displaying our grid
-                            //showGrid(response);
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            loading.dismiss();
-                        }
-                    }
-            );
-
-            //Creating a request queue
-            //RequestQueue requestQueue = Volley.newRequestQueue(this);
-            //Adding our request to the queue
-            //requestQueue.add(jsonArrayRequest);
-        }*/
-
 
         private void showGrid(JSONArray jsonArray) throws JSONException {
             //Looping through all the elements of json array

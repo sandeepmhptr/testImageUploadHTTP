@@ -20,6 +20,23 @@
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/buttonList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show in networklist" />
+        <Button
+            android:id="@+id/buttonList2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show in list" />
     </LinearLayout>
     <LinearLayout
         android:gravity="center_horizontal"
